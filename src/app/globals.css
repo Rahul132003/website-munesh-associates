@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Munesh Associates — "Limestone & Forest" light design system
+
+   Warm cream ground with a deep olive accent. Depth comes from soft,
+   warm shadows and hairline edges rather than the heavy frosted panels
+   of the earlier dark system; surfaces here are cleaner and flatter.
+   ========================================================================== */
+
+@theme {
+  /* Cream grounds, warm rather than blue-white */
+  --color-base-0: #faf8f2;
+  --color-base-1: #f5f2ea;
+  --color-base-2: #edeade;
+  --color-base-3: #ded9c9;
+
+  /* Olive ramp. `forest` is decorative and carries the italic display type,
+     `forest-ink` is the readable text weight, `forest-deep` anchors buttons. */
+  --color-forest: #6b7a52;
+  --color-forest-ink: #4a5834;
+  --color-forest-deep: #3a4526;
+  --color-forest-pale: #eef1e6;
+
+  /* Ink ramp — stone-0 is the darkest (headings), stone-3 the most muted */
+  --color-stone-0: #1c1a16;
+  --color-stone-1: #3b372f;
+  --color-stone-2: #63605a;
+  --color-stone-3: #767065;
+
+  /* Fixed dark for scrims over photography, independent of the page ground */
+  --color-scrim: #14120e;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-script: var(--font-script-hand), cursive;
+
+  --ease-glass: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-base-0);
+    color: var(--color-stone-2);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-stone-0);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-forest);
+    color: #fffdf8;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-base-1);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-base-3);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-forest);
+  }
+}
+
+@layer components {
+  /* --- Ambient page ground --------------------------------------------- */
+  .bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 880px 600px at 10% -8%, rgba(107, 122, 82, 0.11), transparent 62%),
+      radial-gradient(ellipse 760px 680px at 100% 4%, rgba(107, 122, 82, 0.07), transparent 58%),
+      radial-gradient(ellipse 900px 760px at 50% 104%, rgba(107, 122, 82, 0.09), transparent 58%),
+      linear-gradient(180deg, #faf8f2 0%, #f5f2ea 46%, #faf8f2 100%);
+  }
+
+  /* Paper grain — keeps the large cream fields from reading as flat screen white */
+  .bg-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.26'/%3E%3C/svg%3E");
+  }
+
+  /* --- Surfaces ---------------------------------------------------------- */
+  .glass {
+    position: relative;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(28, 26, 22, 0.07);
+    backdrop-filter: blur(16px) saturate(1.25);
+    -webkit-backdrop-filter: blur(16px) saturate(1.25);
+    box-shadow:
+      0 1px 2px rgba(45, 44, 30, 0.04),
+      0 10px 28px rgba(45, 44, 30, 0.06);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .glass-hover {
+    transition:
+      border-color 0.45s var(--ease-glass),
+      background 0.45s var(--ease-glass),
+      box-shadow 0.45s var(--ease-glass);
+  }
+
+  .glass-hover:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(107, 122, 82, 0.28);
+    box-shadow:
+      0 2px 6px rgba(45, 44, 30, 0.05),
+      0 18px 40px rgba(45, 44, 30, 0.1);
+  }
+
+  /* --- Buttons ------------------------------------------------------------ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 999px;
+    padding: 0.95rem 1.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition:
+      transform 0.35s var(--ease-glass),
+      box-shadow 0.35s var(--ease-glass),
+      background 0.35s var(--ease-glass),
+      border-color 0.35s var(--ease-glass);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-forest {
+    background: var(--color-forest-deep);
+    color: #f7f8f2;
+    box-shadow: 0 6px 18px rgba(58, 69, 38, 0.24);
+  }
+
+  .btn-forest:hover {
+    background: var(--color-forest-ink);
+    box-shadow: 0 12px 28px rgba(58, 69, 38, 0.3);
+  }
+
+  .btn-glass {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(28, 26, 22, 0.12);
+    color: var(--color-stone-0);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 2px 8px rgba(45, 44, 30, 0.05);
+  }
+
+  .btn-glass:hover {
+    background: #fff;
+    border-color: rgba(107, 122, 82, 0.45);
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  /* --- Form fields --------------------------------------------------------- */
+  .field {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(28, 26, 22, 0.12);
+    border-radius: 10px;
+    padding: 0.82rem 1rem;
+    color: var(--color-stone-0);
+    font-family: inherit;
+    font-size: 0.92rem;
+    outline: none;
+    transition:
+      border-color 0.25s var(--ease-glass),
+      background 0.25s var(--ease-glass),
+      box-shadow 0.25s var(--ease-glass);
+  }
+
+  .field::placeholder {
+    color: var(--color-stone-3);
+  }
+
+  .field:focus {
+    border-color: var(--color-forest);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(107, 122, 82, 0.16);
+  }
+
+  .field option {
+    background: #fff;
+  }
+
+  /* --- Typographic accents -------------------------------------------------- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-forest-ink);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-forest));
+  }
+
+  .eyebrow-center::before {
+    display: none;
+  }
+
+  /* Italic olive display type — the second line of the hero headline */
+  .display-accent {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-forest-ink);
+  }
+
+  .script {
+    font-family: var(--font-script);
+    color: var(--color-forest-deep);
+    font-weight: 400;
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(107, 122, 82, 0.35), transparent);
+  }
+
+  .chip {
+    border: 1px solid rgba(28, 26, 22, 0.1);
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--color-stone-2);
+  }
+
+  /* Circular pale-sage badge behind the capability icons */
+  .icon-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--color-forest-pale);
+    color: var(--color-forest-deep);
+    transition:
+      background 0.4s var(--ease-glass),
+      transform 0.4s var(--ease-glass);
+  }
+
+  .group:hover .icon-badge {
+    background: var(--color-forest-deep);
+    color: var(--color-forest-pale);
+    transform: translateY(-3px);
+  }
+}
+
+@layer utilities {
+  /* Architectural sketch texture, from the firm's own skyline banner */
+  .sketch-layer {
+    background-image: url("/images/site/project.jpg");
+    background-size: cover;
+    background-position: center bottom;
+    mix-blend-mode: multiply;
+    opacity: 0.32;
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* Feathers the left edge of the hero photograph into the cream ground.
+     Kept short on purpose — a long ramp leaves a third of the photo sitting
+     half-transparent over the cream, which reads as haze rather than a blend. */
+  .feather-left {
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.5) 9%, black 20%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
