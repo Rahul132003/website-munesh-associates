@@ -62,7 +62,7 @@ export const services = [
       "Interior fit-out & finishing",
       "Landscape & external works",
     ],
-    image: "/images/site/about-img-1.jpg",
+    image: "/images/services/residential.jpg",
   },
   {
     slug: "commercial",
@@ -80,7 +80,7 @@ export const services = [
       "Hotels & recreational spaces",
       "Statutory approvals & liaison",
     ],
-    image: "/images/site/intro-video-bg.jpg",
+    image: "/images/services/commercial.jpg",
   },
   {
     slug: "industrial",
@@ -98,7 +98,7 @@ export const services = [
       "Utility & services routing",
       "Plant expansion & retrofit",
     ],
-    image: "/images/site/industrial.jpg",
+    image: "/images/services/industrial.jpg",
   },
 ];
 
@@ -319,24 +319,155 @@ export const studioPhotos = [
   { src: "/images/site/company-4.jpg", alt: "Meeting space at the Munesh Associates office" },
 ];
 
-export type Client = { name: string; logo: string };
+export type Client = {
+  name: string;
+  logo: string;
+  category: "Developers & Real Estate" | "Hotels & Hospitality" | "Education & Healthcare" | "Corporate & Industrial";
+  location?: string;
+  years?: string;
+  projectsDelivered?: string;
+  description?: string;
+  keyProjects?: string[];
+  featured?: boolean;
+};
 
-/** The client roster published on muneshassociates.com, with their logos
- *  cut from that site onto transparent backgrounds. */
+/** The client roster published on muneshassociates.com, with rich metadata and categories. */
 export const clients: Client[] = [
-  { name: "Omaxe", logo: "/images/clients/omaxe.png" },
-  { name: "Adore Group", logo: "/images/clients/adore.png" },
-  { name: "Vashisth", logo: "/images/clients/vashisth.png" },
-  { name: "Whirlpool", logo: "/images/clients/whirlpool.png" },
-  { name: "Golden Tulip Hotels", logo: "/images/clients/golden-tulip.png" },
-  { name: "Forteasia", logo: "/images/clients/forteasia.png" },
-  { name: "Forteasia Flower Valley", logo: "/images/clients/forteasia-flower-valley.png" },
-  { name: "Auric", logo: "/images/clients/auric.png" },
-  { name: "Sakshi Group of Companies", logo: "/images/clients/sakshi-group.png" },
-  { name: "Raj Properties", logo: "/images/clients/raj-properties.png" },
-  { name: "Primly Enterprises", logo: "/images/clients/primly-enterprises.png" },
-  { name: "B.D. Public School", logo: "/images/clients/bd-public-school.png" },
-  { name: "All Saints International School", logo: "/images/clients/all-saints-international-school.png" },
+  {
+    name: "Omaxe",
+    logo: "/images/clients/omaxe.png",
+    category: "Developers & Real Estate",
+    location: "Greater Noida & NCR",
+    years: "9+ Years",
+    projectsDelivered: "5 Towers & Commercial Podiums",
+    description: "Leading Indian real estate developer specializing in high-rise corporate towers and luxury townships.",
+    keyProjects: ["Omaxe Corporate Tower", "Commercial Retail Block"],
+    featured: true,
+  },
+  {
+    name: "Adore Group",
+    logo: "/images/clients/adore.png",
+    category: "Education & Healthcare",
+    location: "Faridabad, Haryana",
+    years: "7+ Years",
+    projectsDelivered: "180-Bed Hospital Complex & Residential Blocks",
+    description: "Prominent multi-sector enterprise developing healthcare facilities, affordable housing, and urban infrastructure.",
+    keyProjects: ["Adore Multispeciality Hospital", "Adore Happy Homes"],
+    featured: true,
+  },
+  {
+    name: "Vashisth",
+    logo: "/images/clients/vashisth.png",
+    category: "Developers & Real Estate",
+    location: "Faridabad & Delhi NCR",
+    years: "11+ Years",
+    projectsDelivered: "12+ Private Villas & Residential Projects",
+    description: "Long-standing construction partner focused on premium independent residences and commercial floors.",
+    keyProjects: ["The Vashisth Villa", "Sector 81 Residential Complex"],
+    featured: true,
+  },
+  {
+    name: "Whirlpool",
+    logo: "/images/clients/whirlpool.png",
+    category: "Corporate & Industrial",
+    location: "Faridabad Industrial Area",
+    years: "6+ Years",
+    projectsDelivered: "Plant Expansion & Facility Retrofits",
+    description: "Global home appliance giant with manufacturing plants and campus infrastructure across NCR.",
+    keyProjects: ["Industrial Plant Retrofit", "Utility Infrastructure Upgrade"],
+    featured: true,
+  },
+  {
+    name: "Golden Tulip Hotels",
+    logo: "/images/clients/golden-tulip.png",
+    category: "Hotels & Hospitality",
+    location: "Gurugram & Delhi NCR",
+    years: "8+ Years",
+    projectsDelivered: "Boutique Resort Wings & Banquet Spaces",
+    description: "International hospitality chain delivering upscale hotel developments, banquet facilities, and luxury interiors.",
+    keyProjects: ["Golden Tulip Resort Wing", "Grand Banquet Hall"],
+    featured: true,
+  },
+  {
+    name: "Forteasia",
+    logo: "/images/clients/forteasia.png",
+    category: "Developers & Real Estate",
+    location: "Gurugram & Sohna",
+    years: "5+ Years",
+    projectsDelivered: "Premium Villa Communities",
+    description: "Boutique real estate developer known for eco-conscious luxury townships and villa estates.",
+    keyProjects: ["Forteasia Residency", "Clubhouse & Landscape"],
+  },
+  {
+    name: "Forteasia Flower Valley",
+    logo: "/images/clients/forteasia-flower-valley.png",
+    category: "Developers & Real Estate",
+    location: "Sohna Road, Gurugram",
+    years: "4+ Years",
+    projectsDelivered: "Integrated Township Infrastructure",
+    description: "Exclusive gated township featuring scenic landscaping, modern civil works, and community spaces.",
+    keyProjects: ["Flower Valley Gated Community", "Entry Avenue & Amenities"],
+  },
+  {
+    name: "Auric",
+    logo: "/images/clients/auric.png",
+    category: "Developers & Real Estate",
+    location: "Faridabad & NCR",
+    years: "6+ Years",
+    projectsDelivered: "Group Housing & Commercial Units",
+    description: "Forward-thinking urban developer crafting modern residential apartments and retail spaces.",
+    keyProjects: ["Auric City Homes", "Commercial Plaza"],
+  },
+  {
+    name: "Sakshi Group of Companies",
+    logo: "/images/clients/sakshi-group.png",
+    category: "Corporate & Industrial",
+    location: "Delhi NCR",
+    years: "8+ Years",
+    projectsDelivered: "Corporate Headquarters & Warehouse Facilities",
+    description: "Diversified industrial group across manufacturing, logistics, and commercial real estate.",
+    keyProjects: ["Sakshi Logistics Hub", "Corporate Office Fit-Out"],
+  },
+  {
+    name: "Raj Properties",
+    logo: "/images/clients/raj-properties.png",
+    category: "Developers & Real Estate",
+    location: "Faridabad, Haryana",
+    years: "10+ Years",
+    projectsDelivered: "Commercial Complexes & Independent Floors",
+    description: "Trusted regional developer creating neighborhood commercial plazas and builder floors.",
+    keyProjects: ["Raj Commercial Center", "Sector 15 Floors"],
+  },
+  {
+    name: "Primly Enterprises",
+    logo: "/images/clients/primly-enterprises.png",
+    category: "Corporate & Industrial",
+    location: "Noida & Delhi NCR",
+    years: "5+ Years",
+    projectsDelivered: "Industrial Sheds & Office Fit-Outs",
+    description: "Enterprise logistics and trade conglomerate with custom warehouse facilities.",
+    keyProjects: ["Primly Trade Center", "Warehouse Logistics Park"],
+  },
+  {
+    name: "B.D. Public School",
+    logo: "/images/clients/bd-public-school.png",
+    category: "Education & Healthcare",
+    location: "Faridabad, Haryana",
+    years: "7+ Years",
+    projectsDelivered: "Academic Blocks & Sports Facilities",
+    description: "Established educational institution expanding modern classroom wings and indoor sports halls.",
+    keyProjects: ["Academic Wing B", "Indoor Gymnasium Complex"],
+  },
+  {
+    name: "All Saints International School",
+    logo: "/images/clients/all-saints-international-school.png",
+    category: "Education & Healthcare",
+    location: "NCR Region",
+    years: "6+ Years",
+    projectsDelivered: "School Campus Master Plan & Auditorium",
+    description: "Premier K-12 institution featuring state-of-the-art laboratories and sustainable campus design.",
+    keyProjects: ["Main Academic Block", "700-Seat Auditorium"],
+  },
 ];
 
 export const testimonials = [
