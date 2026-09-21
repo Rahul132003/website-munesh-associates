@@ -1,163 +1,175 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Counter from "@/components/motion/Counter";
+import ClientHero from "@/components/ClientHero";
+import ClientSpotlight from "@/components/ClientSpotlight";
+import ClientRoster from "@/components/ClientRoster";
+import ClientFaq from "@/components/ClientFaq";
 import CtaBand from "@/components/CtaBand";
-import PageHero from "@/components/PageHero";
 import Reveal from "@/components/motion/Reveal";
+import GlowCard from "@/components/motion/GlowCard";
 import { clients, testimonials } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Clients",
+  title: "Clients & Partners",
   description:
     "Developers, hotels, schools and brands who build with Munesh Associates — including Omaxe, Adore Group, Vashisth, Whirlpool and Golden Tulip Hotels.",
 };
 
 const commitments = [
   {
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+    ),
     title: "A costed BOQ before work starts",
-    body: "You see every line item and rate before the first truck arrives on site. Variations are raised in writing, never absorbed silently into the bill.",
+    body: "You see every line item, specification, and rate before the first excavation truck arrives on site. Variations are raised in writing with prior approval, never absorbed silently.",
   },
   {
-    title: "Weekly progress reporting",
-    body: "A dated report with site photographs, completed activities and the coming week's plan — sent whether the news is good or not.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+        <path d="m9 16 2 2 4-4" />
+      </svg>
+    ),
+    title: "Weekly progress reporting with photos",
+    body: "A dated report with high-resolution site photographs, completed milestone activities, and the coming week's plan — delivered reliably whether the news is good or challenging.",
   },
   {
-    title: "A single point of contact",
-    body: "One project lead who knows your file, from the first meeting to the last snag. You never have to re-explain your project.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+    ),
+    title: "A single point of contact lead",
+    body: "One dedicated project manager who knows your file intimate details, from initial site survey to final snag list. You never have to re-explain your requirements.",
   },
   {
-    title: "Defect liability honoured",
-    body: "The twelve-month defect liability period is a commitment we actually service, not a clause that quietly expires.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    ),
+    title: "12-Month defect liability honored",
+    body: "Our twelve-month defect liability period is a written commitment we actively service with routine site checkups, not a clause that quietly expires.",
   },
 ];
 
 export default function ClientPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Our clients"
-        title="Relationships measured in decades, not contracts"
-        lead="A significant share of our work each year comes from developers and families we have already built for. That repeat rate is the number we watch most closely."
-        crumb="Client"
-      />
+      {/* --------------------------------------------------- Hero Section */}
+      <ClientHero />
 
-      {/* --------------------------------------------------- Client logos */}
-      <section className="px-7 py-14">
+      {/* -------------------------------------------------- Landmark Case Studies */}
+      <ClientSpotlight />
+
+      {/* -------------------------------------------------- Interactive Client Roster */}
+      <ClientRoster clients={clients} />
+
+      {/* -------------------------------------------------- Verified Testimonials */}
+      <section className="px-7 py-20 bg-stone-50/60 border-y border-stone-200/60">
         <div className="mx-auto max-w-[1240px]">
-          <Reveal className="mb-10 text-center">
-            <span className="eyebrow eyebrow-center">Trusted by</span>
-            <h2 className="mx-auto mt-4 max-w-[24ch] text-[1.9rem]">
-              Developers, hotels, schools and brands across North India
+          <Reveal className="mb-14 text-center">
+            <span className="eyebrow eyebrow-center">Client Voice</span>
+            <h2 className="mx-auto mt-4 max-w-[20ch] text-[clamp(1.9rem,3.2vw,2.6rem)]">
+              What Our Clients Say
             </h2>
-          </Reveal>
-
-          {/* Flex-wrap rather than grid so the 13th tile centres on its row */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {clients.map((client, i) => (
-              <Reveal
-                key={client.name}
-                delay={(i % 5) * 0.07}
-                className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.67rem)] lg:w-[calc(20%-0.8rem)]"
-              >
-                <figure className="glass glass-hover group flex h-full flex-col items-center justify-center gap-3 rounded-2xl px-5 pb-4 pt-6">
-                  <div className="relative h-20 w-full">
-                    <Image
-                      src={client.logo}
-                      alt={`${client.name} logo`}
-                      fill
-                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 30vw, 45vw"
-                      className="object-contain transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <figcaption className="text-center text-[0.72rem] leading-snug text-stone-3">
-                    {client.name}
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* -------------------------------------------------- Repeat metrics */}
-      <section className="px-7 py-12">
-        <div className="mx-auto max-w-[1240px]">
-          <Reveal className="glass grid grid-cols-2 gap-6 rounded-3xl p-9 lg:grid-cols-4">
-            {[
-              { value: 68, suffix: "%", label: "Repeat clients" },
-              { value: 450, suffix: "+", label: "Projects delivered" },
-              { value: 11, suffix: " yrs", label: "Longest relationship" },
-              { value: 98, suffix: "%", label: "On-time handover" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="font-display text-[2.3rem] font-semibold text-stone-0">
-                  <Counter to={stat.value} suffix={stat.suffix} />
-                </p>
-                <p className="mt-1.5 text-[0.8rem] uppercase tracking-[0.05em] text-stone-2">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------- Testimonials */}
-      <section className="px-7 py-20">
-        <div className="mx-auto max-w-[1240px]">
-          <Reveal className="mb-12">
-            <span className="eyebrow">In their words</span>
-            <h2 className="mt-4 max-w-[20ch]">What our clients say</h2>
+            <p className="mx-auto mt-3 max-w-[50ch] text-[0.92rem] text-stone-2">
+              Unfiltered feedback from project directors, medical directors, and developers across NCR.
+            </p>
           </Reveal>
 
           <div className="grid gap-6 lg:grid-cols-3">
             {testimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 0.1}>
-                <figure className="glass h-full rounded-3xl p-8">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="mb-5 text-forest/40">
-                    <path d="M7 7h4v4c0 3-1.8 5.4-4.5 6l-.5-1.6C7.6 14.8 8.6 13.6 8.8 12H7zm8 0h4v4c0 3-1.8 5.4-4.5 6l-.5-1.6c1.6-.6 2.6-1.8 2.8-3.4H15z" />
-                  </svg>
-                  <blockquote className="text-[0.98rem] italic text-stone-1">“{t.quote}”</blockquote>
-                  <figcaption className="mt-6 flex items-center gap-3.5">
-                    <span className="flex size-12 items-center justify-center rounded-full border border-forest/35 bg-linear-to-br from-forest/30 to-forest/5 font-display text-[1.05rem] font-semibold text-forest-ink">
+                <GlowCard className="h-full rounded-3xl p-8 border border-stone-200/80 bg-white flex flex-col justify-between shadow-xs">
+                  <div>
+                    <div className="mb-6 flex items-center justify-between">
+                      <div className="flex gap-1 text-amber-500">
+                        {[...Array(5)].map((_, idx) => (
+                          <svg key={idx} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-forest-pale px-2.5 py-0.5 text-[0.68rem] font-semibold text-forest-ink">
+                        ✓ Verified Client
+                      </span>
+                    </div>
+
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="mb-4 text-forest/35">
+                      <path d="M7 7h4v4c0 3-1.8 5.4-4.5 6l-.5-1.6C7.6 14.8 8.6 13.6 8.8 12H7zm8 0h4v4c0 3-1.8 5.4-4.5 6l-.5-1.6c1.6-.6 2.6-1.8 2.8-3.4H15z" />
+                    </svg>
+                    <blockquote className="text-[0.96rem] italic leading-relaxed text-stone-1">
+                      “{t.quote}”
+                    </blockquote>
+                  </div>
+
+                  <figcaption className="mt-8 flex items-center gap-3.5 border-t border-stone-200/80 pt-4">
+                    <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-forest/35 bg-gradient-to-br from-forest/30 to-forest/5 font-display text-[1.1rem] font-bold text-forest-ink">
                       {t.name.charAt(0)}
                     </span>
-                    <span>
-                      <span className="block text-[0.92rem] font-semibold text-stone-0">{t.name}</span>
+                    <div>
+                      <span className="block text-[0.94rem] font-semibold text-stone-0">{t.name}</span>
                       <span className="block text-[0.78rem] text-stone-3">{t.role}</span>
-                    </span>
+                    </div>
                   </figcaption>
-                </figure>
+                </GlowCard>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ----------------------------------------------------- Commitments */}
+      {/* --------------------------------------------------- Client Principles / Commitments */}
       <section className="px-7 py-20">
         <div className="mx-auto max-w-[1240px]">
-          <Reveal className="mb-12 text-center">
-            <span className="eyebrow eyebrow-center">Our commitment</span>
-            <h2 className="mx-auto mt-4 max-w-[24ch]">What every client gets, on every contract</h2>
+          <Reveal className="mb-14 text-center">
+            <span className="eyebrow eyebrow-center">Our Principles</span>
+            <h2 className="mx-auto mt-4 max-w-[24ch] text-[clamp(1.9rem,3.2vw,2.6rem)]">
+              What Every Client Receives, on Every Contract
+            </h2>
+            <p className="mx-auto mt-3 max-w-[55ch] text-[0.92rem] text-stone-2">
+              Four non-negotiable operational commitments that protect your investment, timeline, and quality expectations.
+            </p>
           </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2">
             {commitments.map((c, i) => (
               <Reveal key={c.title} delay={(i % 2) * 0.1}>
-                <div className="glass glass-hover h-full rounded-3xl p-8">
-                  <h3 className="text-[1.08rem]">{c.title}</h3>
-                  <p className="mt-2.5 text-[0.9rem]">{c.body}</p>
-                </div>
+                <GlowCard className="h-full rounded-3xl p-8 border border-stone-200/80 bg-white">
+                  <div className="flex items-start gap-4">
+                    <div className="icon-badge size-12 shrink-0">
+                      {c.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-stone-0">{c.title}</h3>
+                      <p className="mt-2.5 text-[0.9rem] leading-relaxed text-stone-2">{c.body}</p>
+                    </div>
+                  </div>
+                </GlowCard>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
+      {/* --------------------------------------------------- FAQ Accordion */}
+      <ClientFaq />
+
+      {/* --------------------------------------------------- CTA Band */}
       <CtaBand
         title="Become our next long-term client"
-        body="Most of our clients came to us for one project and stayed for several. We would like the chance to earn that with you."
+        body="Most of our clients came to us for one project and stayed for several. We would welcome the opportunity to earn your trust on your next development."
       />
     </>
   );

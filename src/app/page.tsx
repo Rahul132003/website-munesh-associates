@@ -333,27 +333,55 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <Stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
               <StaggerItem key={service.slug} className="h-full">
-                <GlowCard className="h-full rounded-3xl p-8">
-                  <ServiceIcon name={service.icon} />
-                  <h3>{service.title}</h3>
-                  <p className="mt-2.5 text-[0.92rem]">{service.summary}</p>
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {service.capabilities.slice(0, 3).map((cap) => (
-                      <li key={cap} className="chip rounded-full px-3 py-1.5 text-[0.71rem]">
-                        {cap}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href="/services"
-                    className="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-forest-ink"
-                  >
-                    Explore service
-                    <Arrow className="transition-transform duration-500 group-hover:translate-x-1" />
-                  </Link>
+                <GlowCard className="group flex h-full flex-col overflow-hidden rounded-3xl p-0 transition-all duration-500 hover:shadow-xl">
+                  {/* Service Card Image Banner */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-stone-2/10">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      quality={90}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-108"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-0/70 via-stone-0/20 to-transparent" />
+                    
+                    {/* Service Icon Badge */}
+                    <div className="absolute bottom-4 left-4 z-10 flex size-12 items-center justify-center rounded-2xl bg-white/95 shadow-md backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
+                      <ServiceIcon name={service.icon} className="size-10 bg-transparent shadow-none border-0" size={22} />
+                    </div>
+                  </div>
+
+                  {/* Service Card Body */}
+                  <div className="flex flex-1 flex-col p-7">
+                    <h3 className="font-display text-xl font-semibold text-stone-0 group-hover:text-forest-ink transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2.5 text-[0.91rem] leading-relaxed text-stone-2">
+                      {service.summary}
+                    </p>
+
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {service.capabilities.slice(0, 3).map((cap) => (
+                        <li key={cap} className="chip rounded-full px-3 py-1.5 text-[0.71rem] font-medium">
+                          {cap}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-auto pt-7">
+                      <Link
+                        href={`/services#${service.slug}`}
+                        className="inline-flex items-center gap-2 text-[0.88rem] font-semibold text-forest-ink transition-all duration-300 group-hover:translate-x-1"
+                      >
+                        Explore service
+                        <Arrow className="transition-transform duration-400 group-hover:translate-x-1" />
+                      </Link>
+                    </div>
+                  </div>
                 </GlowCard>
               </StaggerItem>
             ))}
