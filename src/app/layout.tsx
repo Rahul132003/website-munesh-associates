@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, La_Belle_Aurore } from "next/font/google";
+import Analytics from "@/components/Analytics";
+import JsonLd from "@/components/JsonLd";
+import MobileContactBar from "@/components/MobileContactBar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
 import ScrollProgress from "@/components/motion/ScrollProgress";
-import { site } from "@/lib/site";
+import { businessJsonLd } from "@/lib/seo";
+import { hero, site } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -28,9 +32,9 @@ const script = La_Belle_Aurore({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.muneshassociates.com"),
+  metadataBase: new URL(site.url),
   title: {
-    default: `${site.legalName} — Architects & Builders in Delhi NCR`,
+    default: `${site.name} — Architects & Builders in Faridabad, Delhi NCR`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -48,7 +52,9 @@ export const metadata: Metadata = {
     title: `${site.legalName} — ${site.tagline}`,
     description: site.description,
     locale: "en_IN",
+    images: [{ url: "/images/site/hero-villa.jpg", alt: hero.imageAlt }],
   },
+  twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
 };
 
@@ -67,7 +73,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <MobileContactBar />
         </MotionProvider>
+        <JsonLd data={businessJsonLd} />
+        <Analytics />
       </body>
     </html>
   );

@@ -9,7 +9,8 @@ import Timeline from "@/components/ui/timeline";
 import { milestones, site, stats, studioPhotos, team, values } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About Us — Architects & Builders Since 2003",
+  alternates: { canonical: "/about" },
   description:
     "Munesh Associates Private Limited has practised architecture and turnkey construction across Delhi NCR since 2003 — 450+ projects in residential, commercial and industrial work.",
 };

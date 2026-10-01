@@ -2,27 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { navLinks, services, site } from "@/lib/site";
+import { navLinks, services, site, whatsappLink } from "@/lib/site";
 
 const socials = [
   {
     label: "Facebook",
-    href: "https://facebook.com",
+    href: site.social.facebook,
     path: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
   },
   {
     label: "Instagram",
-    href: "https://instagram.com",
+    href: site.social.instagram,
     path: "M12 2.2c3.2 0 3.6 0 4.8.07 1.2.06 1.8.25 2.2.42.6.22 1 .48 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.2 1.8-.4 2.2a3.9 3.9 0 0 1-.9 1.4c-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.2-2.2-.4a3.9 3.9 0 0 1-1.4-.9 3.9 3.9 0 0 1-.9-1.4c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 5.3a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9m5.8-.6a1.05 1.05 0 1 0-2.1 0 1.05 1.05 0 0 0 2.1 0M12 9.7a2.3 2.3 0 1 1 0 4.6 2.3 2.3 0 0 1 0-4.6",
   },
   {
-    label: "LinkedIn",
-    href: "https://linkedin.com",
-    path: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6M6 9H2v12h4zM4 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4",
+    label: "Google Maps",
+    href: site.social.googleMaps,
+    path: "M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z",
   },
   {
     label: "WhatsApp",
-    href: `https://wa.me/${site.whatsapp}`,
+    href: whatsappLink(),
     path: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z M12 2a10 10 0 0 0-8.66 15L2 22l5.13-1.34A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.08-1.11l-.29-.17-3.03.79.81-2.96-.19-.31A8 8 0 1 1 12 20z",
   },
 ];
@@ -33,7 +33,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="mt-16 border-t border-stone-0/10 pb-12 pt-16">
+    <footer className="mt-16 border-t border-stone-0/10 pb-28 pt-16 sm:pb-12">
       <div className="mx-auto w-full max-w-[1400px] px-7">
         <div className="grid gap-12 pb-14 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.3fr]">
           {/* Brand Info */}
@@ -119,7 +119,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/projects?category=Town+Planning"
+                  href="/services#additional"
                   className="text-[0.88rem] text-stone-2 transition-colors duration-200 hover:text-forest-ink"
                 >
                   Town Planning

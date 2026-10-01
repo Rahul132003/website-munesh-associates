@@ -5,7 +5,8 @@ import Reveal from "@/components/motion/Reveal";
 import { jobs, perks, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Career",
+  title: "Careers — Architect & Engineer Jobs in Faridabad",
+  alternates: { canonical: "/career" },
   description:
     "Open roles at Munesh Associates — architects, structural engineers, site supervisors, quantity surveyors and interns based in Faridabad, working across Delhi NCR.",
 };

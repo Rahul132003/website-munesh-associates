@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ClientHero from "@/components/ClientHero";
-import ClientSpotlight from "@/components/ClientSpotlight";
 import ClientRoster from "@/components/ClientRoster";
 import ClientFaq from "@/components/ClientFaq";
 import CtaBand from "@/components/CtaBand";
@@ -10,6 +9,7 @@ import { clients, testimonials } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Clients & Partners",
+  alternates: { canonical: "/client" },
   description:
     "Developers, hotels, schools and brands who build with Munesh Associates — including Omaxe, Adore Group, Vashisth, Whirlpool and Golden Tulip Hotels.",
 };
@@ -68,9 +68,6 @@ export default function ClientPage() {
     <>
       {/* --------------------------------------------------- Hero Section */}
       <ClientHero />
-
-      {/* -------------------------------------------------- Landmark Case Studies */}
-      <ClientSpotlight />
 
       {/* -------------------------------------------------- Interactive Client Roster */}
       <ClientRoster clients={clients} />

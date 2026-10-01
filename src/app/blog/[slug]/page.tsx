@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CtaBand from "@/components/CtaBand";
+import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/motion/Reveal";
-import { formatDate, posts } from "@/lib/site";
+import { absoluteUrl } from "@/lib/seo";
+import { formatDate, posts, site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -20,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
       title: post.title,
@@ -37,8 +40,21 @@ export default async function BlogPostPage({ params }: Props) {
 
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    image: absoluteUrl(post.image),
+    datePublished: post.date,
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    author: { "@type": "Organization", name: site.name, url: site.url },
+    publisher: { "@id": absoluteUrl("/#business") },
+  };
+
   return (
     <>
+      <JsonLd data={articleJsonLd} />
       <article className="px-7 pb-16 pt-40">
         <div className="mx-auto max-w-[820px]">
           <Reveal>

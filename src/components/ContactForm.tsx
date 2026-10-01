@@ -1,38 +1,68 @@
 "use client";
 
-import { useState } from "react";
-import { projectCategories } from "@/lib/site";
+import { useActionState, useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
+import { appendAttribution } from "@/lib/attribution";
+import { type LeadState, submitLead } from "@/lib/leads";
+import { projectCategories, site, whatsappLink } from "@/lib/site";
+
+const initial: LeadState = { status: "idle" };
 
 export default function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [state, dispatch, pending] = useActionState(submitLead, initial);
+  const sent = state.status === "success";
+
+  useEffect(() => {
+    if (state.status === "success") trackEvent("generate_lead", { form: "contact" });
+  }, [state]);
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
+      action={(formData) => {
+        appendAttribution(formData);
+        dispatch(formData);
       }}
       className="glass rounded-3xl p-8 sm:p-10"
     >
-      <h2 className="text-[1.6rem]">Request a consultation</h2>
+      <h2 className="text-[1.6rem]">Request a free consultation</h2>
       <p className="mt-2 text-[0.9rem]">
-        Share a few details and we will respond within one working day.
+        Leave your name and number — we call back within one working day.
       </p>
+
+      {/* Honeypot: off-screen and skipped by keyboard and screen readers; only bots fill it */}
+      <input
+        type="text"
+        name="company_website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
         <label className="flex flex-col gap-2">
           <span className="text-[0.8rem] font-medium text-stone-2">Full name</span>
-          <input required type="text" name="name" placeholder="Your name" className="field" />
+          <input required type="text" name="name" autoComplete="name" placeholder="Your name" className="field" />
         </label>
 
         <label className="flex flex-col gap-2">
           <span className="text-[0.8rem] font-medium text-stone-2">Phone</span>
-          <input required type="tel" name="phone" placeholder="+91 00000 00000" className="field" />
+          <input
+            required
+            type="tel"
+            name="phone"
+            autoComplete="tel"
+            inputMode="tel"
+            placeholder="+91 00000 00000"
+            className="field"
+          />
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-[0.8rem] font-medium text-stone-2">Email</span>
-          <input required type="email" name="email" placeholder="you@example.com" className="field" />
+          <span className="text-[0.8rem] font-medium text-stone-2">
+            Email <span className="font-normal text-stone-3">(optional)</span>
+          </span>
+          <input type="email" name="email" autoComplete="email" placeholder="you@example.com" className="field" />
         </label>
 
         <label className="flex flex-col gap-2">
@@ -56,9 +86,10 @@ export default function ContactForm() {
         </label>
 
         <label className="flex flex-col gap-2 sm:col-span-2">
-          <span className="text-[0.8rem] font-medium text-stone-2">Tell us about the project</span>
+          <span className="text-[0.8rem] font-medium text-stone-2">
+            Tell us about the project <span className="font-normal text-stone-3">(optional)</span>
+          </span>
           <textarea
-            required
             name="message"
             rows={5}
             placeholder="Plot size, built-up area, approximate budget and timeline"
@@ -67,15 +98,29 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <button type="submit" disabled={sent} className="btn btn-forest mt-7 w-full sm:w-auto">
-        {sent ? "Thank you — we will be in touch" : "Send Enquiry"}
+      <button type="submit" disabled={pending || sent} className="btn btn-forest mt-7 w-full sm:w-auto">
+        {sent ? "Thank you — we will be in touch" : pending ? "Sending…" : "Request Free Consultation"}
       </button>
 
-      {sent && (
-        <p className="mt-4 text-[0.82rem] text-forest-ink">
-          Your enquiry has been recorded. For anything urgent, call us directly.
-        </p>
-      )}
+      <div aria-live="polite">
+        {sent && (
+          <p className="mt-4 text-[0.82rem] text-forest-ink">
+            Your enquiry has reached our team. For anything urgent, call{" "}
+            <a href={`tel:${site.phones[0].replace(/\s/g, "")}`} className="font-semibold underline">
+              {site.phones[0]}
+            </a>
+            .
+          </p>
+        )}
+        {state.status === "error" && (
+          <p className="mt-4 text-[0.82rem] text-red-700">
+            {state.message}{" "}
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+              Open WhatsApp
+            </a>
+          </p>
+        )}
+      </div>
     </form>
   );
 }

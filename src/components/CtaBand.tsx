@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/lib/site";
+import { whatsappLink } from "@/lib/site";
 import Reveal from "./motion/Reveal";
 
 export default function CtaBand({
@@ -17,10 +17,10 @@ export default function CtaBand({
           <p className="mx-auto mt-4 max-w-[54ch]">{body}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3.5">
             <Link href="/contact" className="btn btn-forest">
-              Start a Conversation
+              Get a Free Consultation
             </Link>
             <a
-              href={`https://wa.me/${site.whatsapp}`}
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-glass"

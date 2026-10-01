@@ -8,7 +8,8 @@ import ServiceIcon from "@/components/ServiceIcon";
 import { processSteps, services } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Architecture & Construction Services in Delhi NCR",
+  alternates: { canonical: "/services" },
   description:
     "Residential, commercial and industrial construction services across Delhi NCR — architectural design, structural engineering, statutory approvals and turnkey execution.",
 };
@@ -52,7 +53,7 @@ export default function ServicesPage() {
 
       {/* -------------------------------------------------- Core services */}
       {services.map((service, i) => (
-        <section key={service.slug} className="px-7 py-14">
+        <section key={service.slug} id={service.slug} className="scroll-mt-24 px-7 py-14">
           <div
             className={`mx-auto grid max-w-[1240px] items-center gap-12 lg:grid-cols-2 ${
               i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
@@ -104,7 +105,7 @@ export default function ServicesPage() {
       ))}
 
       {/* ---------------------------------------------- Supporting services */}
-      <section className="px-7 py-20">
+      <section id="additional" className="scroll-mt-24 px-7 py-20">
         <div className="mx-auto max-w-[1240px]">
           <Reveal className="mb-12 text-center">
             <span className="eyebrow eyebrow-center">Also available</span>

@@ -14,17 +14,36 @@ export const site = {
     line3: "Haryana 121004, India",
   },
   hours: "Monday – Saturday, 9:30 AM – 6:30 PM",
+  url: "https://www.muneshassociates.com",
+  /** Cities the firm actively takes work in; feeds structured data. */
+  social: {
+    facebook: "https://www.facebook.com/munesh.associates/",
+    instagram: "https://www.instagram.com/muneshassociates/",
+    /** Google Business Profile listing — where reviews are left. */
+    googleMaps: "https://maps.app.goo.gl/GzsQUnVvnZkEQ91s9",
+  },
+  areaServed: ["Faridabad", "Delhi", "Gurugram", "Noida", "Greater Noida", "Ballabgarh", "Palwal"],
 } as const;
+
+/** WhatsApp chat link with an opening line already typed, so the visitor only has to hit send. */
+export function whatsappLink(
+  text = "Hi Munesh Associates, I'd like to discuss a construction project.",
+) {
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
+}
 
 export const hero = {
   categories: ["Architecture", "Interiors", "Landscape", "Construction"],
-  line1: "Spaces Designed",
-  line2: "for Better Living",
+  line1: "Architects & Builders",
+  line2: "in Faridabad & Delhi NCR",
   script: "Thoughtful Designs, Lasting Spaces",
   body: "From dream homes to inspiring commercial spaces, we craft sustainable, functional and timeless designs across Delhi NCR — for over twenty years.",
   image: "/images/site/hero-villa.jpg",
   imageAlt: "Contemporary villa at golden hour with timber screens and lit landscaping",
   video: "/images/site/hero-villa.mp4",
+  /** Same clip re-encoded with every frame a keyframe, for scroll scrubbing. */
+  scrubVideo: "/images/site/hero-villa-scrub.mp4",
+  scrubVideoMobile: "/images/site/hero-villa-scrub-mobile.mp4",
 } as const;
 
 export const navLinks = [
@@ -178,8 +197,7 @@ export type Project = {
   image: string;
 };
 
-// The first five carry Munesh Associates' own renders, taken from their site.
-// The rest are stock stand-ins pending real photography for those categories.
+// Only real projects with the firm's own photography or renders belong here.
 export const projects: Project[] = [
   {
     slug: "omaxe-corporate-tower",
@@ -225,76 +243,6 @@ export const projects: Project[] = [
     year: "2022",
     scope: "Show-apartment interior and furniture package",
     image: "/images/site/about-img-2.jpg",
-  },
-  {
-    slug: "adore-multispeciality-hospital",
-    title: "Adore Multispeciality Hospital",
-    category: "Hospital",
-    location: "Faridabad, Haryana",
-    year: "2022",
-    scope: "180-bed facility with modular OT complex",
-    image:
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "shikhar-public-school",
-    title: "Shikhar Public School",
-    category: "Education",
-    location: "Ballabgarh, Haryana",
-    year: "2021",
-    scope: "Academic block, auditorium and sports campus",
-    image:
-      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "greenfield-heights",
-    title: "Greenfield Heights",
-    category: "Group Housing",
-    location: "Sector 86, Faridabad",
-    year: "2024",
-    scope: "Four residential towers, 320 apartments",
-    image:
-      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "aravalli-resort",
-    title: "Aravalli Resort & Club",
-    category: "Hotels & Recreational",
-    location: "Gurugram, Haryana",
-    year: "2023",
-    scope: "Boutique resort with banquet and spa wing",
-    image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "new-sector-masterplan",
-    title: "Sector 91 Master Plan",
-    category: "Town Planning",
-    location: "Faridabad, Haryana",
-    year: "2020",
-    scope: "112-acre township layout and services plan",
-    image:
-      "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "awas-yojana-housing",
-    title: "Awas Yojana Housing",
-    category: "Affordable Housing",
-    location: "Palwal, Haryana",
-    year: "2021",
-    scope: "480 units under PMAY scheme",
-    image:
-      "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "crown-plaza-retail",
-    title: "Crown Plaza Retail Block",
-    category: "Commercial",
-    location: "Sector 12, Faridabad",
-    year: "2019",
-    scope: "Mixed-use retail and office podium",
-    image:
-      "https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -373,9 +321,9 @@ export const clients: Client[] = [
     category: "Education & Healthcare",
     location: "Faridabad, Haryana",
     years: "7+ Years",
-    projectsDelivered: "180-Bed Hospital Complex & Residential Blocks",
+    projectsDelivered: "Residential Blocks",
     description: "Prominent multi-sector enterprise developing healthcare facilities, affordable housing, and urban infrastructure.",
-    keyProjects: ["Adore Multispeciality Hospital", "Adore Happy Homes"],
+    keyProjects: ["Adore Happy Homes"],
     featured: true,
   },
   {
