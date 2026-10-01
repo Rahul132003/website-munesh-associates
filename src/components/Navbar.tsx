@@ -4,8 +4,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
+import {
+  Briefcase,
+  Building2,
+  Handshake,
+  HardHat,
+  House,
+  Newspaper,
+  Phone,
+  Users,
+} from "lucide-react";
+import GradientMenu, { type GradientMenuItem } from "@/components/ui/gradient-menu";
 import { navLinks, site } from "@/lib/site";
+
+/* Icon and gradient for each page, in earthy pairs drawn from the site palette. */
+const menuStyle: Record<string, Omit<GradientMenuItem, "href" | "title">> = {
+  "/": { icon: <House />, gradientFrom: "#8a9a6a", gradientTo: "#3a4526" },
+  "/about": { icon: <Users />, gradientFrom: "#c9a45c", gradientTo: "#8f6a2a" },
+  "/services": { icon: <HardHat />, gradientFrom: "#d08a62", gradientTo: "#9a4f35" },
+  "/projects": { icon: <Building2 />, gradientFrom: "#7fa595", gradientTo: "#3f6b5f" },
+  "/career": { icon: <Briefcase />, gradientFrom: "#c08a8a", gradientTo: "#874a52" },
+  "/client": { icon: <Handshake />, gradientFrom: "#7d93b0", gradientTo: "#3f5673" },
+  "/blog": { icon: <Newspaper />, gradientFrom: "#a8b25a", gradientTo: "#5d6b2a" },
+  "/contact": { icon: <Phone />, gradientFrom: "#b4927a", gradientTo: "#6b4f3a" },
+};
+
+const menuItems: GradientMenuItem[] = navLinks.map((link) => ({
+  href: link.href,
+  title: link.label,
+  ...menuStyle[link.href],
+}));
 
 const ArrowRight = ({ className = "" }: { className?: string }) => (
   <svg
@@ -82,30 +111,8 @@ export default function Navbar() {
           </Link>
 
           {/* ---------------------------------------------------- Nav links */}
-          <nav className="hidden xl:block">
-            <ul className="flex items-center gap-1">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={`relative block px-3.5 py-2 text-[0.92rem] transition-colors duration-300 ${
-                      isActive(link.href)
-                        ? "font-semibold text-forest-ink"
-                        : "text-stone-1 hover:text-forest-ink"
-                    }`}
-                  >
-                    {link.label}
-                    {isActive(link.href) && (
-                      <motion.span
-                        layoutId="nav-underline"
-                        className="absolute inset-x-3.5 -bottom-0.5 h-0.5 rounded-full bg-forest-ink"
-                        transition={{ type: "spring", stiffness: 400, damping: 34 }}
-                      />
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <nav className="hidden xl:block" aria-label="Main">
+            <GradientMenu items={menuItems} isActive={isActive} />
           </nav>
 
           {/* --------------------------------------------------------- CTA */}
@@ -165,7 +172,7 @@ export default function Navbar() {
               </button>
 
               <nav className="flex flex-col">
-                {navLinks.map((link, i) => (
+                {menuItems.map((link, i) => (
                   <motion.div
                     key={link.href}
                     initial={{ opacity: 0, x: 24 }}
@@ -175,11 +182,22 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className={`block border-b border-stone-0/10 py-3.5 text-base ${
+                      style={{ "--gradient-from": link.gradientFrom, "--gradient-to": link.gradientTo } as CSSProperties}
+                      className={`flex items-center gap-3.5 border-b border-stone-0/10 py-3 text-base ${
                         isActive(link.href) ? "font-semibold text-forest-ink" : "text-stone-1"
                       }`}
                     >
-                      {link.label}
+                      <span
+                        aria-hidden="true"
+                        className={`flex size-9 items-center justify-center rounded-full [&_svg]:size-[17px] ${
+                          isActive(link.href)
+                            ? "bg-[linear-gradient(45deg,var(--gradient-from),var(--gradient-to))] text-white"
+                            : "border border-stone-0/8 bg-white text-stone-2 shadow-[0_3px_10px_rgba(45,44,30,0.08)]"
+                        }`}
+                      >
+                        {link.icon}
+                      </span>
+                      {link.title}
                     </Link>
                   </motion.div>
                 ))}

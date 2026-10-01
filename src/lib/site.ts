@@ -319,6 +319,29 @@ export const studioPhotos = [
   { src: "/images/site/company-4.jpg", alt: "Meeting space at the Munesh Associates office" },
 ];
 
+export const team = [
+  {
+    name: "Ar. Rahul Singh",
+    role: "Founder Principal Architect & Planner",
+    src: "/images/site/team-rahul-singh.jpg",
+  },
+  {
+    name: "Mr. Rambir Singh",
+    role: "Firm Founder & Principal Construction Team Coordinator",
+    src: "/images/site/team-rambir-singh.jpg",
+  },
+  {
+    name: "Ar. Lalit Singh",
+    role: "Principal Architect & Planner",
+    src: "/images/site/team-lalit-singh.jpg",
+  },
+  {
+    name: "Mst. Deepak Singh",
+    role: "Project Engineers & Construction Management",
+    src: "/images/site/team-deepak-singh.jpg",
+  },
+];
+
 export type Client = {
   name: string;
   logo: string;
