@@ -1,18 +1,31 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import CtaBand from "@/components/CtaBand";
 import PageHero from "@/components/PageHero";
 import Counter from "@/components/motion/Counter";
 import ParallaxImage from "@/components/motion/ParallaxImage";
 import Reveal from "@/components/motion/Reveal";
-import { Stagger, StaggerItem } from "@/components/motion/Stagger";
-import { milestones, site, stats, studioPhotos, values } from "@/lib/site";
+import { type CarouselCard, ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
+import Timeline from "@/components/ui/timeline";
+import { milestones, site, stats, studioPhotos, team, values } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
     "Munesh Associates Private Limited has practised architecture and turnkey construction across Delhi NCR since 2003 — 450+ projects in residential, commercial and industrial work.",
 };
+
+const studioCaptions = [
+  "Where every project is planned",
+  "Design reviews around the table",
+  "The studio interior",
+  "The whole team, together",
+];
+
+// Team portraits alternate with studio photos around the carousel ring.
+const teamCarouselCards: CarouselCard[] = team.flatMap((member, i) => [
+  { src: member.src, alt: `${member.name}, ${member.role}`, name: member.name, role: member.role },
+  { ...studioPhotos[i], name: "Our Faridabad studio", role: studioCaptions[i] },
+]);
 
 export default function AboutPage() {
   return (
@@ -127,57 +140,30 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ---------------------------------------------------- Studio photos */}
-      <section className="px-7 py-20">
-        <div className="mx-auto max-w-[1240px]">
-          <Reveal className="mb-12 text-center">
-            <span className="eyebrow eyebrow-center">Inside the practice</span>
-            <h2 className="mx-auto mt-4 max-w-[22ch]">Our studio in Faridabad</h2>
-            <p className="mx-auto mt-4 max-w-[52ch]">
-              Every drawing that leaves this office has been reviewed across this table.
+      {/* --------------------------------------------------------- Our team */}
+      <section className="overflow-x-clip px-7">
+        <ThreeDPhotoCarousel cards={teamCarouselCards} variant="arc">
+          <div className="mx-auto max-w-[1240px] text-center">
+            <span className="eyebrow eyebrow-center">Our team</span>
+            <h2 className="mx-auto mt-3 max-w-[22ch]">The people behind every drawing</h2>
+            <p className="mx-auto mt-3 max-w-[52ch] text-[0.95rem] max-sm:hidden">
+              The principals who design and build your project, and the Faridabad studio
+              where every drawing is reviewed before it leaves the office.
             </p>
-          </Reveal>
-
-          <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {studioPhotos.map((photo) => (
-              <StaggerItem key={photo.src}>
-                <figure className="group relative aspect-3/4 overflow-hidden rounded-2xl border border-stone-0/10">
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    quality={90}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-108"
-                  />
-                </figure>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
+          </div>
+        </ThreeDPhotoCarousel>
       </section>
 
       {/* -------------------------------------------------------- Timeline */}
-      <section className="px-7 py-20">
-        <div className="mx-auto max-w-[1240px]">
-          <Reveal className="mb-12">
-            <span className="eyebrow">Milestones</span>
-            <h2 className="mt-4 max-w-[20ch]">How the practice grew</h2>
-          </Reveal>
-
-          <div className="relative pl-10">
-            <span className="absolute bottom-2 left-2.5 top-2 w-px bg-linear-to-b from-forest/45 to-transparent" />
-            {milestones.map((m, i) => (
-              <Reveal key={m.year} delay={i * 0.08} className="relative pb-10 last:pb-0">
-                <span className="absolute -left-10 top-1 size-4.5 rounded-full border-2 border-forest bg-base-0" />
-                <span className="text-[0.85rem] font-semibold text-forest-ink">{m.year}</span>
-                <h3 className="mt-1.5 text-[1.15rem]">{m.title}</h3>
-                <p className="mt-1.5 max-w-[62ch] text-[0.92rem]">{m.body}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Timeline
+        items={milestones}
+        eyebrow="Milestones"
+        title="How the practice grew"
+        periodLabel={`${milestones[0].year} — Today`}
+        imageSrc="/images/site/founder-portrait.png"
+        imageAlt="Ar. Rahul Singh, Founder Principal Architect & Planner"
+        duration={1.4}
+      />
 
       <CtaBand
         title="Work with a team that stays accountable"
