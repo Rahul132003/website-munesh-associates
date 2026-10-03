@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { navLinks, services, site, whatsappLink } from "@/lib/site";
+import { CinematicFooter, Magnetic } from "@/components/ui/motion-footer";
+import { navLinks, services, site, siteCredit, whatsappLink } from "@/lib/site";
 
 const socials = [
   {
@@ -27,48 +27,126 @@ const socials = [
   },
 ];
 
+const marquee = [
+  ...services.map((s) => s.title),
+  "Interiors & Fit-out",
+  "Town Planning",
+  "Delhi NCR since 2003",
+];
+
+const isExternal = (href: string) => href.startsWith("http");
+
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const primaryPhone = site.phones[0];
 
   return (
-    <footer className="mt-16 border-t border-stone-0/10 pb-28 pt-16 sm:pb-12">
-      <div className="mx-auto w-full max-w-[1400px] px-7">
-        <div className="grid gap-12 pb-14 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.3fr]">
-          {/* Brand Info */}
-          <div>
-            <Link href="/" className="mb-5 flex items-center gap-3.5 group">
-              <Image
-                src="/images/site/logo2.png"
-                alt={site.name}
-                width={50}
-                height={50}
-                className="object-contain transition-transform duration-300 group-hover:scale-105"
-              />
-              <div>
-                <span className="block font-display text-[1.2rem] font-semibold tracking-tight text-stone-0 group-hover:text-forest-ink transition-colors">
-                  {site.name}
-                </span>
-                <span className="block text-[0.62rem] font-medium uppercase tracking-[0.24em] text-stone-3">
-                  Architects &amp; Builders
-                </span>
-              </div>
+    <CinematicFooter
+      marquee={marquee}
+      giantText="MUNESH"
+      heading={
+        <>
+          <span className="block">Let&apos;s build</span>
+          <span className="block font-normal italic">what&apos;s next.</span>
+        </>
+      }
+      primary={
+        <>
+          <Magnetic>
+            <Link
+              href="/contact"
+              className="footer-solid-pill flex items-center gap-3 rounded-full px-9 py-4.5 text-[0.95rem] font-semibold"
+            >
+              Get a Quote
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
             </Link>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-glass-pill group flex items-center gap-3 rounded-full px-9 py-4.5 text-[0.95rem] font-semibold"
+            >
+              <svg className="size-5 text-[#f3f1e8]/60 transition-colors group-hover:text-[#a9d18e]" viewBox="0 0 24 24" fill="currentColor">
+                <path d={socials[3].path} />
+              </svg>
+              WhatsApp Us
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href={`tel:${primaryPhone.replace(/\s/g, "")}`}
+              className="footer-glass-pill group flex items-center gap-3 rounded-full px-9 py-4.5 text-[0.95rem] font-semibold"
+            >
+              <svg className="size-5 text-[#f3f1e8]/60 transition-colors group-hover:text-[#f3f1e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              {primaryPhone}
+            </a>
+          </Magnetic>
+        </>
+      }
+      secondary={
+        <nav aria-label="Footer" className="contents">
+          {navLinks.map((link) => (
+            <Magnetic key={link.href}>
+              <Link
+                href={link.href}
+                className="footer-glass-pill block rounded-full px-5 py-2.5 text-[0.8rem] font-medium text-[#f3f1e8]/65"
+              >
+                {link.label}
+              </Link>
+            </Magnetic>
+          ))}
+        </nav>
+      }
+      details={
+        <div className="mx-auto grid max-w-4xl gap-6 border-t border-[#f3f1e8]/10 pt-7 text-center text-[0.82rem] text-[#f3f1e8]/60 sm:grid-cols-3 sm:text-left">
+          <address className="not-italic leading-relaxed">
+            <span className="mb-1.5 block text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[#c9d4ae]/80">
+              Studio
+            </span>
+            {site.address.line1}
+            <br />
+            {site.address.line2}
+            <br />
+            {site.address.line3}
+          </address>
 
-            <p className="max-w-[38ch] text-[0.88rem] leading-relaxed text-stone-2">
-              {site.description}
-            </p>
+          <div className="leading-relaxed">
+            <span className="mb-1.5 block text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[#c9d4ae]/80">
+              Reach us
+            </span>
+            <a href={`mailto:${site.email}`} className="block transition-colors hover:text-[#f3f1e8]">
+              {site.email}
+            </a>
+            <span className="block">
+              {site.phones.slice(1).map((p, i) => (
+                <span key={p}>
+                  {i > 0 && " · "}
+                  <a href={`tel:${p.replace(/\s/g, "")}`} className="transition-colors hover:text-[#f3f1e8]">
+                    {p}
+                  </a>
+                </span>
+              ))}
+            </span>
+          </div>
 
-            <div className="mt-6 flex items-center gap-2.5">
+          <div>
+            <span className="mb-2 block text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[#c9d4ae]/80">
+              Follow
+            </span>
+            <div className="flex justify-center gap-2.5 sm:justify-start">
               {socials.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
-                  target={s.href.startsWith("http") ? "_blank" : undefined}
-                  rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  target={isExternal(s.href) ? "_blank" : undefined}
+                  rel={isExternal(s.href) ? "noopener noreferrer" : undefined}
                   aria-label={s.label}
-                  className="flex size-9.5 items-center justify-center rounded-xl border border-stone-0/10 bg-white/60 text-stone-1 transition-all duration-300 hover:border-forest/40 hover:bg-forest-pale hover:text-forest-deep shadow-xs"
+                  className="footer-glass-pill flex size-9.5 items-center justify-center rounded-xl text-[#f3f1e8]/70"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path d={s.path} />
@@ -76,126 +154,34 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <span className="eyebrow mb-5">Navigate</span>
-            <ul className="flex flex-col gap-2.5">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-[0.88rem] text-stone-2 transition-colors duration-200 hover:text-forest-ink"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <span className="eyebrow mb-5">Services</span>
-            <ul className="flex flex-col gap-2.5">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    href={`/services#${s.slug}`}
-                    className="text-[0.88rem] text-stone-2 transition-colors duration-200 hover:text-forest-ink"
-                  >
-                    {s.title}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  href="/projects?category=Interiors"
-                  className="text-[0.88rem] text-stone-2 transition-colors duration-200 hover:text-forest-ink"
-                >
-                  Interiors &amp; Fit-out
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services#additional"
-                  className="text-[0.88rem] text-stone-2 transition-colors duration-200 hover:text-forest-ink"
-                >
-                  Town Planning
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Studio Info */}
-          <div>
-            <span className="eyebrow mb-5">Studio</span>
-            <address className="flex flex-col gap-3.5 text-[0.88rem] not-italic text-stone-2">
-              <span className="leading-snug">
-                {site.address.line1}
-                <br />
-                {site.address.line2}
-                <br />
-                {site.address.line3}
-              </span>
-              <div>
-                <span className="block text-[0.72rem] uppercase tracking-wider text-stone-3 font-medium mb-0.5">
-                  Email
-                </span>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="font-medium text-stone-1 transition-colors hover:text-forest-ink"
-                >
-                  {site.email}
-                </a>
-              </div>
-              <div>
-                <span className="block text-[0.72rem] uppercase tracking-wider text-stone-3 font-medium mb-0.5">
-                  Phone
-                </span>
-                <div className="flex flex-col gap-0.5 font-medium text-stone-1">
-                  {site.phones.map((p) => (
-                    <a
-                      key={p}
-                      href={`tel:${p.replace(/\s/g, "")}`}
-                      className="transition-colors hover:text-forest-ink"
-                    >
-                      {p}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </address>
+            <span className="mt-2.5 block text-[0.74rem] text-[#f3f1e8]/45">{site.hours}</span>
           </div>
         </div>
-
-        {/* Bottom copyright and back-to-top bar */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-stone-0/10 pt-8 text-[0.82rem] text-stone-3">
-          <p>
-            © {new Date().getFullYear()} {site.legalName}. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-6">
-            <span className="font-script text-[1rem] text-forest-ink font-normal">
-              {site.promise}
+      }
+      copyright={
+        <>
+          © {new Date().getFullYear()} {site.legalName}.{" "}
+          <span className="whitespace-nowrap lg:block">All rights reserved.</span>
+        </>
+      }
+      badge={
+        siteCredit.name && (
+          <a
+            href={siteCredit.url || undefined}
+            target="_blank"
+            rel="noopener"
+            className="footer-glass-pill group flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 sm:gap-2.5 sm:px-5"
+          >
+            <span className="animate-footer-pulse size-2 rounded-full bg-[#a9b98a] shadow-[0_0_10px_#a9b98a]" />
+            <span className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-[#f3f1e8]/60 sm:text-[0.68rem] sm:tracking-[0.18em]">
+              Designed &amp; developed by
             </span>
-            <button
-              onClick={scrollToTop}
-              type="button"
-              aria-label="Back to top"
-              className="flex items-center gap-2 rounded-full border border-stone-0/12 bg-white/70 px-4 py-1.5 text-[0.78rem] font-medium text-stone-1 transition-all duration-300 hover:border-forest/45 hover:bg-forest-pale hover:text-forest-deep shadow-xs cursor-pointer"
-            >
-              <span>Back to top</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 15l-6-6-6 6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </footer>
+            <span className="text-[0.76rem] font-bold tracking-[0.02em] text-[#e9edd9] transition-colors group-hover:text-white sm:text-[0.8rem]">
+              {siteCredit.name}
+            </span>
+          </a>
+        )
+      }
+    />
   );
 }
-
-

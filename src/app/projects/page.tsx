@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import CtaBand from "@/components/CtaBand";
 import PageHero from "@/components/PageHero";
-import ProjectGallery, { ProjectGalleryFromUrl } from "@/components/ProjectGallery";
+import ProjectGallery from "@/components/ProjectGallery";
 import Reveal from "@/components/motion/Reveal";
 import { projectCategories, projects } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Projects — Villas, Housing, Commercial & Interiors",
-  alternates: { canonical: "/projects" },
+  title: "Projects",
   description:
-    "Selected projects by Munesh Associates across Delhi NCR — commercial towers, private villas, group housing and interiors.",
+    "Selected projects by Munesh Associates across commercial, hospital, education, group housing, hotels, villas, interiors, town planning and affordable housing.",
 };
 
 export default function ProjectsPage() {
@@ -34,9 +32,7 @@ export default function ProjectsPage() {
             ))}
           </Reveal>
 
-          <Suspense fallback={<ProjectGallery projects={projects} />}>
-            <ProjectGalleryFromUrl projects={projects} />
-          </Suspense>
+          <ProjectGallery projects={projects} />
         </div>
       </section>
 

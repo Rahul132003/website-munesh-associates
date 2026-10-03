@@ -32,6 +32,13 @@ export function whatsappLink(
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
 }
 
+/** The studio that designed and built this website, credited in the footer.
+    Leave `name` empty to hide the credit. */
+export const siteCredit = {
+  name: "HashX Labs",
+  url: "https://www.hashxlabs.com",
+};
+
 export const hero = {
   categories: ["Architecture", "Interiors", "Landscape", "Construction"],
   line1: "Architects & Builders",

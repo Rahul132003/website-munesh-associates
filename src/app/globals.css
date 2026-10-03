@@ -313,8 +313,139 @@
   }
 }
 
+/* ==========================================================================
+   Cinematic footer — deep olive "curtain reveal" at the foot of every page
+   ========================================================================== */
+@layer components {
+  .cinematic-footer {
+    --footer-bg: #1b1f14;
+    --footer-ink: #f3f1e8;
+    background: var(--footer-bg);
+    color: var(--footer-ink);
+  }
+
+  /* Curtain mode, switched on by CinematicFooter only when the whole footer
+     fits on screen; the wrapper's height is set to the footer's own height. */
+  .cinematic-curtain.is-curtain {
+    clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+  }
+  .cinematic-curtain.is-curtain .cinematic-footer {
+    position: fixed;
+    inset: auto 0 0 0;
+  }
+
+  .footer-bg-grid {
+    background-size: 60px 60px;
+    background-image:
+      linear-gradient(to right, rgba(243, 241, 232, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(243, 241, 232, 0.035) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  }
+
+  .footer-aurora {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(107, 122, 82, 0.4) 0%,
+      rgba(201, 164, 92, 0.16) 40%,
+      transparent 70%
+    );
+  }
+
+  .footer-glass-pill {
+    background: linear-gradient(145deg, rgba(243, 241, 232, 0.07) 0%, rgba(243, 241, 232, 0.02) 100%);
+    border: 1px solid rgba(243, 241, 232, 0.12);
+    box-shadow:
+      0 10px 30px -10px rgba(0, 0, 0, 0.5),
+      inset 0 1px 1px rgba(243, 241, 232, 0.1),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footer-glass-pill:hover,
+  .footer-glass-pill:focus-visible {
+    background: linear-gradient(145deg, rgba(243, 241, 232, 0.14) 0%, rgba(243, 241, 232, 0.04) 100%);
+    border-color: rgba(201, 214, 170, 0.4);
+    box-shadow:
+      0 20px 40px -10px rgba(0, 0, 0, 0.6),
+      inset 0 1px 1px rgba(243, 241, 232, 0.2);
+    color: var(--footer-ink);
+    outline: none;
+  }
+
+  /* Solid olive-cream pill for the main call to action */
+  .footer-solid-pill {
+    background: linear-gradient(145deg, #e9edd9 0%, #c9d4ae 100%);
+    color: #1b1f14;
+    box-shadow: 0 14px 34px -10px rgba(169, 185, 138, 0.55);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footer-solid-pill:hover,
+  .footer-solid-pill:focus-visible {
+    background: linear-gradient(145deg, #f6f8ec 0%, #d6dfbe 100%);
+    box-shadow: 0 20px 44px -10px rgba(169, 185, 138, 0.7);
+    outline: none;
+  }
+
+  .footer-giant-bg-text {
+    font-size: 24vw;
+    line-height: 0.75;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(243, 241, 232, 0.06);
+    background: linear-gradient(180deg, rgba(243, 241, 232, 0.1) 0%, transparent 60%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .footer-text-glow {
+    color: var(--footer-ink);
+    background: linear-gradient(180deg, #f3f1e8 0%, rgba(243, 241, 232, 0.45) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(243, 241, 232, 0.12));
+  }
+}
+
+@keyframes footer-breathe {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+@keyframes footer-scroll-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes footer-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+
+@layer utilities {
+  .animate-footer-breathe {
+    transform: translate(-50%, -50%);
+    animation: footer-breathe 8s ease-in-out infinite alternate;
+  }
+  .animate-footer-scroll-marquee {
+    animation: footer-scroll-marquee 40s linear infinite;
+  }
+  .animate-footer-pulse {
+    animation: footer-pulse 2s ease-in-out infinite;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .animate-footer-breathe,
+  .animate-footer-scroll-marquee,
+  .animate-footer-pulse {
+    animation: none;
   }
 }

@@ -2,34 +2,17 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { categoryIcons, projectCategories, type Project } from "@/lib/site";
 
-type Props = { projects: Project[]; initialCategory?: string };
-
-/**
- * Gallery that opens on the category named in `?category=` (e.g. links from the
- * footer). Render inside <Suspense> with a plain <ProjectGallery> fallback so the
- * full grid is still in the prerendered HTML.
- */
-export function ProjectGalleryFromUrl({ projects }: Props) {
-  const category = useSearchParams().get("category") ?? "All";
-  return <ProjectGallery key={category} projects={projects} initialCategory={category} />;
-}
-
-export default function ProjectGallery({ projects, initialCategory = "All" }: Props) {
-  // Only offer filters that will show something.
-  const categories = projectCategories.filter((c) => projects.some((p) => p.category === c));
-  const [filter, setFilter] = useState(
-    categories.includes(initialCategory) ? initialCategory : "All",
-  );
+export default function ProjectGallery({ projects }: { projects: Project[] }) {
+  const [filter, setFilter] = useState("All");
   const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
     <>
       <div className="mb-12 flex flex-wrap gap-2.5">
-        {["All", ...categories].map((cat) => (
+        {["All", ...projectCategories].map((cat) => (
           <button
             key={cat}
             type="button"
@@ -117,6 +100,9 @@ export default function ProjectGallery({ projects, initialCategory = "All" }: Pr
         </AnimatePresence>
       </motion.div>
 
+      {filtered.length === 0 && (
+        <p className="py-16 text-center text-stone-3">No projects listed in this category yet.</p>
+      )}
     </>
   );
 }
