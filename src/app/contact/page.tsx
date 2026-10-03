@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/motion/Reveal";
-import { site } from "@/lib/site";
+import { site, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact Us — Free Consultation & Quote",
+  alternates: { canonical: "/contact" },
   description:
     "Contact Munesh Associates Private Limited — Sector 81, Faridabad, Haryana. Call +91 99999 49286 or email muneshassociates@gmail.com to discuss your project.",
 };
@@ -83,7 +84,7 @@ export default function ContactPage() {
               </a>
 
               <a
-                href={`https://wa.me/${site.whatsapp}`}
+                href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-forest mt-7 w-full"
@@ -106,6 +107,17 @@ export default function ContactPage() {
               referrerPolicy="no-referrer-when-downgrade"
               className="h-[420px] w-full rounded-[1.4rem] border-0 grayscale-[0.4]"
             />
+            <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3.5 text-[0.88rem]">
+              <span className="text-stone-2">Worked with us? A Google review helps other families find us.</span>
+              <a
+                href={site.social.googleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-forest-ink hover:underline"
+              >
+                Open in Google Maps &rarr;
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>

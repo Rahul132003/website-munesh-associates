@@ -25,7 +25,7 @@ export default function WordReveal({ text, className = "", delay = 0, accent = [
       }}
     >
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
+        <span key={`${word}-${i}`} className="-mr-[0.1em] inline-block overflow-hidden pr-[0.1em] align-bottom">
           <motion.span
             className={`inline-block ${
               accentSet.has(word.replace(/[^a-zA-Z]/g, "").toLowerCase()) ? "display-accent" : ""

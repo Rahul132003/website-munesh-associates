@@ -1,14 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
-import HeroFoliage from "@/components/HeroFoliage";
 import ServiceIcon from "@/components/ServiceIcon";
+import ScrollVideoHero from "@/components/ui/scroll-locked-video-hero";
 import Counter from "@/components/motion/Counter";
 import GlowCard from "@/components/motion/GlowCard";
 import Marquee from "@/components/motion/Marquee";
 import ParallaxImage from "@/components/motion/ParallaxImage";
 import Reveal from "@/components/motion/Reveal";
-import WordReveal from "@/components/motion/WordReveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import {
   capabilityStrip,
@@ -24,6 +24,10 @@ import {
   values,
   workTiles,
 } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const Arrow = ({ className = "" }: { className?: string }) => (
   <svg
@@ -41,160 +45,31 @@ const Arrow = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-/* Staggered indents for the hand-lettered note, one per word */
-const scriptIndent = ["", "pl-[1.3em]", "pl-[0.8em]", "pl-[1.7em]"];
-
-function StatCard() {
-  return (
-    <div className="inline-flex items-center gap-4 rounded-xl border border-white/70 bg-white/75 px-5 py-3.5 shadow-[0_10px_30px_rgba(20,18,14,0.16)] backdrop-blur-md">
-      <p className="font-display text-[2.2rem] font-normal leading-none tracking-tight text-stone-0">
-        <Counter to={450} suffix="+" />
-      </p>
-      <span className="h-11 w-px bg-stone-0/15" />
-      <p className="text-[0.74rem] leading-[1.45] text-stone-1">
-        Projects delivered
-        <br />
-        across Delhi NCR
-        <br />
-        since 2003
-      </p>
-    </div>
-  );
-}
-
 export default function HomePage() {
   const latest = posts.slice(0, 3);
 
   return (
     <>
       {/* ============================================================ Hero */}
-      <section className="relative overflow-hidden pt-28 lg:pt-[5.2rem]">
-        <div className="relative lg:h-[clamp(34rem,35vw,44rem)]">
-          {/* Looping footage. The panel is 62% wide and 35vw tall — close to
-              the 1.77 ratio of the source clip — so at common desktop widths
-              the whole house shows uncropped, roofline included. Video only
-              on lg+; mobile keeps the static photograph below for bandwidth. */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[62%] lg:block">
-            <div className="feather-left relative size-full">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster={hero.image}
-                aria-label={hero.imageAlt}
-                className="absolute inset-0 size-full object-cover object-right"
-              >
-                <source src={hero.video} type="video/mp4" />
-              </video>
-            </div>
+      <ScrollVideoHero
+        videoSrc={hero.scrubVideo}
+        mobileVideoSrc={hero.scrubVideoMobile}
+        poster={hero.image}
+        eyebrow={hero.categories.join("  /  ")}
+        title={[hero.line1, hero.line2]}
+        tagline={site.promise}
+        actions={
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/projects" className="btn btn-forest group">
+              Explore Our Projects
+              <Arrow className="transition-transform duration-400 group-hover:translate-x-1" />
+            </Link>
+            <Link href="/contact" className="btn btn-glass">
+              Get a Quote
+            </Link>
           </div>
-
-          {/* Warm sunset light carried across the seam into the cream */}
-          <div
-            className="pointer-events-none absolute inset-y-0 left-[28%] hidden w-[24%] bg-[radial-gradient(closest-side,rgba(255,206,140,0.3),transparent)] lg:block"
-            aria-hidden
-          />
-
-          <HeroFoliage />
-
-          {/* Script note in the sky, top right */}
-          <Reveal
-            delay={1.1}
-            className="pointer-events-none absolute right-[4.5%] top-10 z-10 hidden xl:block"
-          >
-            <p className="script -rotate-8 text-[1.95rem] leading-[1.2]">
-              {hero.script.split(" ").map((word, i) => (
-                <span key={word} className={`block ${scriptIndent[i] ?? ""}`}>
-                  {word}
-                </span>
-              ))}
-            </p>
-            <span className="ml-[3.2rem] mt-3 block h-px w-10 -rotate-8 bg-forest-deep/60" />
-          </Reveal>
-
-          {/* Projects-delivered card, lower right of the photograph */}
-          <Reveal delay={1} className="absolute bottom-6 right-[3%] z-10 hidden lg:block">
-            <StatCard />
-          </Reveal>
-
-          <div className="relative z-10 mx-auto h-full max-w-[1400px] px-7">
-            <div className="flex h-full items-center">
-              <div className="lg:max-w-[40%]">
-                <Reveal>
-                  <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-stone-2">
-                    {hero.categories.map((c, i) => (
-                      <span key={c} className="flex items-center gap-3">
-                        {c}
-                        {i < hero.categories.length - 1 && (
-                          <span className="text-stone-3/60">/</span>
-                        )}
-                      </span>
-                    ))}
-                  </p>
-                  <span className="mt-6 block h-px w-10 bg-stone-1/60" />
-                </Reveal>
-
-                <h1 className="mt-7 text-[clamp(2.5rem,3.7vw,4rem)] font-medium leading-[1.05] tracking-[-0.02em]">
-                  <span className="block">
-                    <WordReveal text={hero.line1} delay={0.2} />
-                  </span>
-                  <span className="block">
-                    <WordReveal
-                      text={hero.line2}
-                      delay={0.45}
-                      accent={hero.line2.split(" ")}
-                    />
-                  </span>
-                </h1>
-
-                <Reveal delay={0.85}>
-                  <p className="mt-6 max-w-[40ch] text-[1.02rem] leading-relaxed text-stone-2">
-                    {hero.body}
-                  </p>
-
-                  <div className="mt-9 flex flex-wrap items-center gap-7">
-                    <Link href="/projects" className="btn btn-forest group">
-                      Explore Our Projects
-                      <Arrow className="transition-transform duration-400 group-hover:translate-x-1" />
-                    </Link>
-
-                    <Link
-                      href="/about"
-                      className="group flex items-center gap-3.5 text-[0.92rem] font-medium text-stone-1 transition-colors hover:text-forest-ink"
-                    >
-                      <span className="flex size-11 items-center justify-center rounded-full border border-stone-1/50 transition-colors duration-400 group-hover:border-forest-deep group-hover:bg-forest-deep group-hover:text-forest-pale">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M8 5.5v13l11-6.5z" />
-                        </svg>
-                      </span>
-                      Watch Our Story
-                    </Link>
-                  </div>
-                </Reveal>
-
-                {/* Mobile / tablet photograph */}
-                <Reveal delay={0.3} className="mb-12 mt-12 lg:hidden">
-                  <div className="relative aspect-[1670/942] overflow-hidden rounded-3xl">
-                    <Image
-                      src={hero.image}
-                      alt={hero.imageAlt}
-                      fill
-                      quality={90}
-                      sizes="100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="mt-5">
-                    <StatCard />
-                  </div>
-                </Reveal>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* ================================================ Capability strip */}
       <section className="relative z-10 border-b border-stone-0/8 bg-[#f4f2eb]">

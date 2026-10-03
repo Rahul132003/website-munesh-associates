@@ -7,7 +7,8 @@ import Reveal from "@/components/motion/Reveal";
 import { formatDate, posts } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blog — Construction & Architecture Guides for Delhi NCR",
+  alternates: { canonical: "/blog" },
   description:
     "Practical notes on building in Delhi NCR — construction costs, vaastu and structural design, pre-engineered buildings, green norms and contractor selection.",
 };
